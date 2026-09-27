@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://f4oav4w6w4pl"]
+
+[ext_resource type="Texture2D" uid="uid://c6g7igww63ml4" path="res://icon.svg" id="1_3x8rl"]
+[ext_resource type="Script" uid="uid://eejk4f7qonsj" path="res://scripts/components/movement_component.gd" id="2_7x6j1"]
+[ext_resource type="Script" uid="uid://bb63ibbjlwu8l" path="res://scripts/state_machine/state_machine.gd" id="2_jl7m2"]
+[ext_resource type="Script" uid="uid://ctseu712jutou" path="res://scripts/states/player/idle_state.gd" id="3_7x6j1"]
+[ext_resource type="Script" uid="uid://cq4kfc7oafq05" path="res://scripts/states/player/walk_state.gd" id="4_jl7m2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tpwit"]
+size = Vector2(126, 126)
+
+[node name="Player" type="CharacterBody2D" unique_id=605233635]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=343034723]
+texture = ExtResource("1_3x8rl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=673223821]
+shape = SubResource("RectangleShape2D_tpwit")
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1397901644 node_paths=PackedStringArray("body")]
+script = ExtResource("2_7x6j1")
+body = NodePath("..")
+metadata/_custom_type_script = "uid://eejk4f7qonsj"
+
+[node name="StateMachine" type="Node" parent="." unique_id=1418072845 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_jl7m2")
+initial_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://bb63ibbjlwu8l"
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1872057449 node_paths=PackedStringArray("movement", "walk_state")]
+script = ExtResource("3_7x6j1")
+movement = NodePath("../../MovementComponent")
+walk_state = NodePath("../Walk")
+metadata/_custom_type_script = "uid://ch7hkww8of4ho"
+
+[node name="Walk" type="Node" parent="StateMachine" unique_id=1737292878 node_paths=PackedStringArray("movement", "idle_state")]
+script = ExtResource("4_jl7m2")
+movement = NodePath("../../MovementComponent")
+idle_state = NodePath("../Idle")
+metadata/_custom_type_script = "uid://ch7hkww8of4ho"
