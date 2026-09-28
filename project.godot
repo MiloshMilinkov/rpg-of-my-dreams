@@ -26,6 +26,7 @@ window/stretch/aspect="expand"
 [file_customization]
 
 folder_colors={
+"res://resources/": "blue",
 "res://scripts/": "green",
 "res://senes/": "yellow"
 }

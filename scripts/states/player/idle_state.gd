@@ -15,7 +15,7 @@ func physics_update(_delta: float) -> void:
 		movement.set_move_intent(direction)
 		switch_state.emit(walk_state)
 		return
-
+		
 	movement.clear_move_intent()
 
 func _update_animation() -> void:
