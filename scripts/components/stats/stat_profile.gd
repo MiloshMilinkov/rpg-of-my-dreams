@@ -1,7 +1,7 @@
 class_name StatProfile extends Resource
 #Starting attributes and calculation rules
 #This Resource contains configuration. Each character’s actual attributes live in its StatsComponent.
-#These are starting balance values you can change in the Inspector:
+#These are starting balance values you can change in the Inspector.
 
 enum Attribute {
 	STRENGTH,
