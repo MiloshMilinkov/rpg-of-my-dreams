@@ -2,14 +2,21 @@
 
 [ext_resource type="Texture2D" uid="uid://c6g7igww63ml4" path="res://icon.svg" id="1_3x8rl"]
 [ext_resource type="Script" uid="uid://eejk4f7qonsj" path="res://scripts/components/movement_component.gd" id="2_7x6j1"]
+[ext_resource type="Script" uid="uid://b0e2xgjnmrwr6" path="res://scripts/components/stats/stats_component.gd" id="2_bkpmi"]
 [ext_resource type="Script" uid="uid://bb63ibbjlwu8l" path="res://scripts/state_machine/state_machine.gd" id="2_jl7m2"]
+[ext_resource type="Script" uid="uid://caidynhh3n7cy" path="res://scripts/components/stats/stat_profile.gd" id="3_3epgt"]
 [ext_resource type="Script" uid="uid://ctseu712jutou" path="res://scripts/states/player/idle_state.gd" id="3_7x6j1"]
+[ext_resource type="Script" uid="uid://c5ky0hvwsfgku" path="res://scripts/components/stats/health_component.gd" id="4_3epgt"]
 [ext_resource type="Script" uid="uid://cq4kfc7oafq05" path="res://scripts/states/player/walk_state.gd" id="4_jl7m2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpwit"]
 size = Vector2(126, 126)
 
-[node name="Player" type="CharacterBody2D" unique_id=605233635]
+[sub_resource type="Resource" id="Resource_tpwit"]
+script = ExtResource("3_3epgt")
+metadata/_custom_type_script = "uid://caidynhh3n7cy"
+
+[node name="Player" type="CharacterBody2D" unique_id=605233635 groups=["player"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=343034723]
 texture = ExtResource("1_3x8rl")
@@ -17,9 +24,21 @@ texture = ExtResource("1_3x8rl")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=673223821]
 shape = SubResource("RectangleShape2D_tpwit")
 
-[node name="MovementComponent" type="Node" parent="." unique_id=1397901644 node_paths=PackedStringArray("body")]
+[node name="StatsComponent" type="Node" parent="." unique_id=1117431490]
+script = ExtResource("2_bkpmi")
+profile = SubResource("Resource_tpwit")
+metadata/_custom_type_script = "uid://b0e2xgjnmrwr6"
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1639553883 node_paths=PackedStringArray("stats")]
+script = ExtResource("4_3epgt")
+stats = NodePath("../StatsComponent")
+metadata/_custom_type_script = "uid://c5ky0hvwsfgku"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1397901644 node_paths=PackedStringArray("body", "stats", "health")]
 script = ExtResource("2_7x6j1")
 body = NodePath("..")
+stats = NodePath("../StatsComponent")
+health = NodePath("../HealthComponent")
 metadata/_custom_type_script = "uid://eejk4f7qonsj"
 
 [node name="StateMachine" type="Node" parent="." unique_id=1418072845 node_paths=PackedStringArray("initial_state")]
