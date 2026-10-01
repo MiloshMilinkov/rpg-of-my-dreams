@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://f4oav4w6w4pl"]
 
 [ext_resource type="Texture2D" uid="uid://c6g7igww63ml4" path="res://icon.svg" id="1_3x8rl"]
-[ext_resource type="Script" uid="uid://eejk4f7qonsj" path="res://scripts/components/movement_component.gd" id="2_7x6j1"]
+[ext_resource type="Script" uid="uid://eejk4f7qonsj" path="res://scripts/components/movement/movement_component.gd" id="2_7x6j1"]
 [ext_resource type="Script" uid="uid://b0e2xgjnmrwr6" path="res://scripts/components/stats/stats_component.gd" id="2_bkpmi"]
 [ext_resource type="Script" uid="uid://bb63ibbjlwu8l" path="res://scripts/state_machine/state_machine.gd" id="2_jl7m2"]
-[ext_resource type="Script" uid="uid://caidynhh3n7cy" path="res://scripts/components/stats/stat_profile.gd" id="3_3epgt"]
+[ext_resource type="Script" uid="uid://caidynhh3n7cy" path="res://scripts/resources/stats/stat_profile.gd" id="3_3epgt"]
 [ext_resource type="Script" uid="uid://ctseu712jutou" path="res://scripts/states/player/idle_state.gd" id="3_7x6j1"]
 [ext_resource type="Script" uid="uid://c5ky0hvwsfgku" path="res://scripts/components/stats/health_component.gd" id="4_3epgt"]
 [ext_resource type="Script" uid="uid://cq4kfc7oafq05" path="res://scripts/states/player/walk_state.gd" id="4_jl7m2"]
+[ext_resource type="Script" uid="uid://btvdsxwch7u6o" path="res://scripts/components/progression/progression_component.gd" id="5_252l3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tpwit"]
 size = Vector2(126, 126)
@@ -33,6 +34,11 @@ metadata/_custom_type_script = "uid://b0e2xgjnmrwr6"
 script = ExtResource("4_3epgt")
 stats = NodePath("../StatsComponent")
 metadata/_custom_type_script = "uid://c5ky0hvwsfgku"
+
+[node name="ProgressionComponenet" type="Node" parent="." unique_id=1413386437 node_paths=PackedStringArray("stats")]
+script = ExtResource("5_252l3")
+stats = NodePath("../StatsComponent")
+metadata/_custom_type_script = "uid://btvdsxwch7u6o"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1397901644 node_paths=PackedStringArray("body", "stats", "health")]
 script = ExtResource("2_7x6j1")

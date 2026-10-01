@@ -1,21 +1,22 @@
 class_name MovementComponent extends Node
 
 @export var body: CharacterBody2D
-@export var base_speed: float = 100.0
+@export var stats: StatsComponent
+@export var health: HealthComponent
 
-var flat_speed_bonus: float = 0.0
-var stats_speed_multiplier: float = 1.0
 var movement_enabled: bool = true
 var facing_direction: Vector2 = Vector2.DOWN
 var _move_direction: Vector2 = Vector2.ZERO
 var _mode_multiplier: float = 1.0
 
+
 func _ready() -> void:
-	if not is_instance_valid(body):
-		push_error("MovementComponent: Assign a CharacterBody2D to body.")
+	if not is_instance_valid(body) or not is_instance_valid(stats):
+		push_error("MovementComponent: Assign body and stats.")
 		set_physics_process(false)
 		return
 		
+	stats.initialize()
 	body.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	process_physics_priority = 100
 
@@ -32,19 +33,22 @@ func set_move_intent(direction: Vector2, mode_multiplier: float = 1.0) -> void:
 		facing_direction = Vector2.DOWN if _move_direction.y > 0.0 else Vector2.UP
 
 func get_effective_speed() -> float:
-	var adjusted_base: float = maxf(base_speed + flat_speed_bonus, 0.0)
-	return adjusted_base * maxf(stats_speed_multiplier, 0.0)
+	return stats.get_stat(StatProfile.Stat.MOVE_SPEED)
 
 func _physics_process(_delta: float) -> void:
-	if not is_instance_valid(body):
+	if not is_instance_valid(body) or not is_instance_valid(stats):
+		stop()
 		set_physics_process(false)
 		return
 
-	var current_speed: float = get_effective_speed() * _mode_multiplier
+	var can_move: bool = movement_enabled
 
-	if movement_enabled:
-		body.velocity = _move_direction * current_speed
-	else:
+	if is_instance_valid(health):
+		can_move = can_move and health.is_alive()
+
+	if can_move:
+		body.velocity = (_move_direction * get_effective_speed() * _mode_multiplier)
+	else: 
 		body.velocity = Vector2.ZERO
 
 	body.move_and_slide()
