@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ckxxsvgtklcoq"]
+
+[ext_resource type="Script" uid="uid://bryh54opmsne8" path="res://senes/test_scenes/stat_pickup.gd" id="1_tb1ny"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tpwit"]
+radius = 15.0
+
+[node name="StatPickup" type="Area2D" unique_id=517715971]
+collision_layer = 0
+script = ExtResource("1_tb1ny")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1462751808]
+shape = SubResource("CircleShape2D_tpwit")
